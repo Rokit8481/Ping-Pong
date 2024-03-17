@@ -45,10 +45,8 @@ class Ball(GameSprite):
         self.rect.x += self.speed
         self.rect.y += self.speed_y
 
-        if self.rect.x > 500 - 30 or self.rect.x < 0:
+        if self.rect.x > 460 or self.rect.x < -10:
             self.speed *= -1
-        #if self.rect.y > 700 - 30 or self.rect.y < 0:
-            #self.speed_y *= -1
 
         if self.rect.colliderect(player1.rect) or self.rect.colliderect(player2.rect):
             self.speed_y *= -1
