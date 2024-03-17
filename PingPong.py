@@ -25,16 +25,16 @@ class GameSprite(sprite.Sprite):
 class Player(GameSprite):
     def update_up(self):
         keys = key.get_pressed()
-        if keys[K_LEFT] and self.rect.x > 5:
+        if keys[K_a] and self.rect.x > 5:
             self.rect.x -= self.speed
-        if keys[K_RIGHT] and self.rect.x < 500 - 80:
+        if keys[K_d] and self.rect.x < 500 - 150:
             self.rect.x += self.speed
 
     def update_down(self):
         keys = key.get_pressed()
-        if keys[K_UP] and self.rect.x > 5:
+        if keys[K_LEFT] and self.rect.x > 5:
             self.rect.x -= self.speed
-        if keys[K_DOWN] and self.rect.x < 500 - 80:
+        if keys[K_RIGHT] and self.rect.x < 500 - 150:
             self.rect.x += self.speed
 
 player1 = Player(img_player, 170, 560, 150, 30, 10)
@@ -52,8 +52,10 @@ while game:
         if e.type == QUIT:
             game = False
     
-    player1.update()
-    player2.update()
+    player1.update_up()  
+    player2.update_down()  
+    #player1.update()
+    #player2.update()
 
     player1.reset()
     player2.reset()
