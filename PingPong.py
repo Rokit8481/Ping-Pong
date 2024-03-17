@@ -4,6 +4,9 @@ window = display.set_mode((500, 700))
 display.set_caption('Пінг-Понг')
 background = transform.scale(image.load("sky.jpg"), (500, 700))
 
+img_player = "platform1.png"
+
+
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):
         sprite.Sprite.__init__(self)
@@ -34,6 +37,8 @@ class Player(GameSprite):
         if keys[K_DOWN] and self.rect.x < 500 - 80:
             self.rect.x += self.speed
 
+player1 = Player(img_player, 170, 560, 150, 30, 10)
+player2 = Player(img_player, 170, 100, 150, 30, 10)
 
 clock = time.Clock()
 FPS = 60
@@ -46,6 +51,11 @@ while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
+    
+    player1.update()
+    player2.update()
 
+    player1.reset()
+    player2.reset()
     display.update()
     clock.tick(FPS)
