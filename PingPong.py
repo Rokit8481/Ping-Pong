@@ -20,14 +20,21 @@ class GameSprite(sprite.Sprite):
         window.blit(self.image, (self.rect.x, self.rect.y))
  
 class Player(GameSprite):
-    def update(self):
+    def update_up(self):
         keys = key.get_pressed()
         if keys[K_LEFT] and self.rect.x > 5:
             self.rect.x -= self.speed
-        if keys[K_RIGHT] and self.rect.x < win_width - 80:
+        if keys[K_RIGHT] and self.rect.x < 500 - 80:
             self.rect.x += self.speed
 
-            
+    def update_down(self):
+        keys = key.get_pressed()
+        if keys[K_UP] and self.rect.x > 5:
+            self.rect.x -= self.speed
+        if keys[K_DOWN] and self.rect.x < 500 - 80:
+            self.rect.x += self.speed
+
+
 clock = time.Clock()
 FPS = 60
 
