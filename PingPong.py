@@ -25,20 +25,37 @@ class GameSprite(sprite.Sprite):
 class Player(GameSprite):
     def update_up(self):
         keys = key.get_pressed()
-        if keys[K_a] and self.rect.x > 5:
-            self.rect.x -= self.speed
-        if keys[K_d] and self.rect.x < 500 - 150:
-            self.rect.x += self.speed
-
-    def update_down(self):
-        keys = key.get_pressed()
         if keys[K_LEFT] and self.rect.x > 5:
             self.rect.x -= self.speed
         if keys[K_RIGHT] and self.rect.x < 500 - 150:
             self.rect.x += self.speed
 
+    def update_down(self):
+        keys = key.get_pressed()
+        if keys[K_a] and self.rect.x > 5:
+            self.rect.x -= self.speed
+        if keys[K_d] and self.rect.x < 500 - 150:
+            self.rect.x += self.speed
+
+class Ball(GameSprite):
+    def __init__(self, ball_image, ball_x, ball_y, size_x, size_y, ball_speed_x, ball_speed_y):
+        super().__init__(ball_image, ball_x, ball_y, size_x, size_y, ball_speed_x)
+        self.speed_y = ball_speed_y
+    def update(self):
+        self.rect.x += self.speed
+        self.rect.y += self.speed_y
+
+        if self.rect.x > 500 - 30 or self.rect.x < 0:
+            self.speed *= -1
+        if self.rect.y > 700 - 30 or self.rect.y < 0:
+            self.speed_y *= -1
+
+        if self.rect.colliderect(player1.rect) or self.rect.colliderect(player2.rect):
+            self.speed_y *= -1
+
 player1 = Player(img_player, 170, 560, 150, 30, 10)
 player2 = Player(img_player, 170, 100, 150, 30, 10)
+ball = Ball("ball.png", 235, 335, 50, 50, 2, 2)
 
 clock = time.Clock()
 FPS = 60
@@ -53,11 +70,11 @@ while game:
             game = False
     
     player1.update_up()  
-    player2.update_down()  
-    #player1.update()
-    #player2.update()
+    player2.update_down() 
+    ball.update()   
 
     player1.reset()
     player2.reset()
+    ball.reset()
     display.update()
     clock.tick(FPS)
