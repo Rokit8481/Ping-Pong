@@ -1,5 +1,4 @@
 from pygame import *
-
 window = display.set_mode((500, 700))
 display.set_caption('Пінг-Понг')
 background = transform.scale(image.load("sky.jpg"), (500, 700))
@@ -41,9 +40,11 @@ class Ball(GameSprite):
     def __init__(self, ball_image, ball_x, ball_y, size_x, size_y, ball_speed_x, ball_speed_y):
         super().__init__(ball_image, ball_x, ball_y, size_x, size_y, ball_speed_x)
         self.speed_y = ball_speed_y
+        self.start_time = time.get_ticks()
     def update(self):
-        self.rect.x += self.speed
-        self.rect.y += self.speed_y
+        if time.get_ticks() - self.start_time > 1000:
+            self.rect.x += self.speed
+            self.rect.y += self.speed_y
 
         if self.rect.x > 460 or self.rect.x < -10:
             self.speed *= -1
@@ -61,6 +62,7 @@ FPS = 60
 game = True
 
 while game:
+
     window.blit(background, (0, 0))
 
     for e in event.get():
